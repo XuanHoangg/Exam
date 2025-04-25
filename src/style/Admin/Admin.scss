@@ -1,0 +1,78 @@
+.admin-continer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+
+  .admin-sidebar {
+    flex-shrink: 0;
+    height: 100vh;
+    padding: 0 !important;
+    display: flex;
+    color: pink;
+    z-index: 1000;
+    .ps-broken {
+      left: -500px;
+    }
+    .fabars-toggle {
+      width: 30px;
+      height: 30px;
+
+      color: black;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      svg {
+        font-size: 20px;
+      }
+    }
+
+    .ps-sidebar-root {
+      height: 100%;
+      .ps-sidebar-container {
+        background: none;
+
+        .ps-menuitem-root {
+          .ps-submenu-content {
+            background-color: transparent;
+          }
+        }
+
+        .sidebar-header {
+          padding: 20px 25px;
+          font-weight: bold;
+          font-size: 30px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          transition: all 0.3s ease;
+
+          @media screen and (min-width: 768px) {
+            .collapsed & {
+              max-width: 50px;
+            }
+            .not-collapsed & {
+              max-width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .ps-sidebar-root {
+        width: 40%;
+      }
+
+      position: relative;
+    }
+  }
+
+  .admin-content {
+    flex-grow: 1;
+    background-color: #f7f7f7;
+    @media screen and (max-width: 768px) {
+      width: 60%;
+    }
+  }
+}

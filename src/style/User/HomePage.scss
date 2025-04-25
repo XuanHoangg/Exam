@@ -1,0 +1,115 @@
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 20px;
+  }
+
+  .btn-login,
+  .btn-signup {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-collapse {
+    background-color: #fff;
+    padding: 10px;
+  }
+
+  .nav-link {
+    padding: 10px 0;
+  }
+  .homePage-content {
+    padding: 50px !important;
+
+    .title-slogan {
+      font-size: 1.5rem;
+    }
+
+    .title-content {
+      font-size: 1rem;
+    }
+
+    .btn-start {
+      font-size: 0.95rem;
+      padding: 10px 20px;
+    }
+  }
+}
+.app-container {
+  .header-continer {
+    button.btn-login {
+      border-radius: 5px;
+      margin-right: 10px;
+      padding: 0 15px;
+      border: 1px solid #ae7777;
+      &:hover {
+        background-color: #ae7777;
+        color: white;
+      }
+    }
+    button.btn-signup {
+      background-color: rgb(28, 28, 28);
+      border-radius: 5px;
+      padding: 0 15px;
+      color: white;
+      &:hover {
+        background-color: #ae7777;
+        color: white;
+        border: 1px solid #ae7777;
+      }
+    }
+    .navbar {
+      z-index: 100;
+      background-color: rgba(0, 0, 0, 0) !important;
+      padding-top: 10px;
+      .nav-link.active {
+        color: #007bff;
+      }
+    }
+  }
+  .homePage-continer {
+    .video-homepage {
+      position: fixed;
+      bottom: 0;
+      width: 100vw;
+    }
+    .homePage-content {
+      position: relative;
+
+      padding: 100px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      .title-slogan {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px rgb(215 30 30);
+        max-width: 700px;
+      }
+
+      .title-content {
+        font-size: 1.2rem;
+        max-width: 650px;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 4px rgb(0 0 0);
+      }
+
+      .btn-start {
+        padding: 12px 25px;
+        font-size: 1rem;
+        background-color: #ff5a5f;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        transition: background-color 0.3s ease;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+
+        &:hover {
+          background-color: #e04a50;
+        }
+      }
+    }
+  }
+}
