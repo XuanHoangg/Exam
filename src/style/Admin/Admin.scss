@@ -71,6 +71,7 @@
   .admin-content {
     flex-grow: 1;
     background-color: #f7f7f7;
+    padding-right: 20px;
     @media screen and (max-width: 768px) {
       width: 60%;
     }

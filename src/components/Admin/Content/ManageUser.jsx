@@ -1,15 +1,28 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import ModalCreateUser from "./ModalCreateUser";
 import "../../../style/Admin/ManageUser.scss";
 import { FcPlus } from "react-icons/fc";
+import TableUser from "./TableUser";
+import { getAllUsers } from "../../../service/userService";
 
 const ManageUser = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+  const fetchUsers = async () => {
+    let data = await getAllUsers();
+    if (data && data.EC === 0) {
+      setUsers(data.DT);
+    }
+  };
   return (
     <div className="manage-continer">
       <div className="title">Quản lý người dùng</div>
@@ -18,22 +31,14 @@ const ManageUser = () => {
           <Button variant="success" onClick={handleShow}>
             <FcPlus /> Thêm người dùng
           </Button>
-          <ModalCreateUser show={show} handleClose={handleClose} />
+          <ModalCreateUser
+            show={show}
+            handleClose={handleClose}
+            fetchUsers={fetchUsers}
+          />
         </div>
-        <div className="table-user-container">
-          <table className="table-user">
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Mật khẩu</th>
-                <th>Email</th>
-                <th>Quyền</th>
-                <th>Avate</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+        <div className="table-user-container mt-3">
+          <TableUser users={users} />
         </div>
       </div>
     </div>

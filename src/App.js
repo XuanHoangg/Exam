@@ -7,9 +7,6 @@ import Mycomponent from "./components/Mycomponent";
 import Header from "./components/Header/Header";
 import { Link, Outlet } from "react-router-dom";
 const App = () => {
-  const count = useSelector((state) => state.counter.count);
-  const dispatch = useDispatch();
-
   return (
     <div className="app-container">
       <div className="header-continer">
