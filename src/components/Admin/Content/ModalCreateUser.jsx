@@ -4,9 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import axios from "axios";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import validation from "../../../utils/validation";
 import { postCreateNewUser } from "../../../service/userService";
 const ModalCreateUser = (props) => {
@@ -14,7 +13,7 @@ const ModalCreateUser = (props) => {
   const { validateEmail, validateUsername, validatePassword } = validation;
 
   //props
-  const { show, handleClose, fetchUsers } = props;
+  const { show, handleClose, fetchUsersWithPage } = props;
 
   //state
   const [userName, setUserName] = useState("");
@@ -60,7 +59,7 @@ const ModalCreateUser = (props) => {
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      await fetchUsers();
+      await fetchUsersWithPage(1);
     } else {
       toast.error(data.EM);
     }

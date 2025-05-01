@@ -7,14 +7,22 @@ import Row from "react-bootstrap/Row";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import validation from "../../../utils/validation";
-import { postCreateNewUser } from "../../../service/userService";
+import { putUpdateUser, getUserWithPage } from "../../../service/userService";
+
 import _ from "lodash";
 const ModalUpdateUser = (props) => {
   //validation
-  const { validateEmail, validateUsername, validatePassword } = validation;
+  const { validateUsername } = validation;
 
   //props
-  const { show, handleClose, fetchUsers, userData } = props;
+  const {
+    show,
+    handleClose,
+    userData,
+    handleRefreshUI,
+    currentPage,
+    limitUser,
+  } = props;
 
   //state
   const [userName, setUserName] = useState("");
@@ -31,7 +39,7 @@ const ModalUpdateUser = (props) => {
       setPreviewImage(URL.createObjectURL(file));
     }
   };
-  // Khi modal mở, cập nhật state với thông tin từ userData
+
   useEffect(() => {
     if (!_.isEmpty(userData)) {
       setUserName(userData.username);
@@ -41,7 +49,6 @@ const ModalUpdateUser = (props) => {
         userData.image ? `data:image;base64,${userData.image}` : null
       );
       setImage(userData.image);
-      console.log("userData", userData);
     }
   }, [userData]);
   const resetForm = () => {
@@ -58,24 +65,23 @@ const ModalUpdateUser = (props) => {
       toast.error("Tên đăng nhập phải có hơn 5 ký tự!");
       return;
     }
-    if (!validatePassword(password)) {
-      toast.error("Mật khẩu phải hơn 5 ký tự!");
-      return;
-    }
-    if (!validateEmail(email)) {
-      toast.error("Invalid email!");
-      return;
-    }
 
-    //call api
-    // let data = await postCreateNewUser(email, password, userName, image, role);
-    // if (data && data.EC === 0) {
-    //   toast.success(data.EM);
-    //   handleClose();
-    //   await fetchUsers();
-    // } else {
-    //   toast.error(data.EM);
-    // }
+    // call api
+    let data = await putUpdateUser(userData.id, userName, image, role);
+    if (data && data.EC === 0) {
+      toast.success(data.EM);
+      fetchUsers();
+      handleClose();
+    } else {
+      toast.error(data.EM);
+    }
+  };
+
+  const fetchUsers = async () => {
+    let data = await getUserWithPage(currentPage, limitUser);
+    if (data && data.EC === 0) {
+      handleRefreshUI(data.DT.users);
+    }
   };
   return (
     <>

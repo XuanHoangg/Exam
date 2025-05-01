@@ -5,7 +5,7 @@ import { FaBars } from "react-icons/fa";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Outlet } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 const Admin = (props) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -45,7 +45,6 @@ const Admin = (props) => {
           draggable
           pauseOnHover
           theme="light"
-          // transition={Bounce}
         />
       </div>
     </div>

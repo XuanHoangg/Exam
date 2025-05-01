@@ -37,6 +37,37 @@
     }
   }
   .user-content {
+    .total-user-container {
+      display: flex;
+      justify-content: right;
+      gap: 12px;
+      margin: 16px 0;
+
+      .totalUser {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .input-user {
+        width: 80px;
+        padding: 6px 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+
+        &:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        }
+      }
+    }
+  }
+  .table-user-container {
+    .pagination {
+      justify-content: center !important;
+    }
   }
 }
 .modal {

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import ModalUpdateUser from "./ModalUpdateUser";
-import { getAllUsers } from "../../../service/userService";
 import ModalDeleteUser from "./ModalDeleteUser";
+import ReactPaginate from "react-paginate";
 
-const TableUser = (props) => {
-  const { users } = props;
+const TableUserPaginate = (props) => {
+  const { users, handlePageCount, totalPage, limitUser } = props;
   const [show, setShow] = useState(false);
   const [showModalDel, setShowModalDel] = useState(false);
   const [userData, setUserData] = useState({});
   const [allUsers, setAllUsers] = useState(users);
+
+  const [currentPage, setCurrentPage] = useState(1);
   const handleClose = () => setShow(false);
   const handleCloseModalDel = () => setShowModalDel(false);
 
@@ -30,12 +32,17 @@ const TableUser = (props) => {
   useEffect(() => {
     setAllUsers(users);
   }, [users]);
+
+  const handlePageClick = (event) => {
+    handlePageCount(event.selected + 1);
+    setCurrentPage(event.selected + 1);
+  };
   return (
     <>
       <table className="table table-success table-striped table-hover table-bordered">
         <thead>
           <tr>
-            <th scope="col">No</th>
+            <th scope="col">UserID</th>
             <th scope="col">UserName</th>
             <th scope="col">Email</th>
             <th scope="col">Role</th>
@@ -94,13 +101,33 @@ const TableUser = (props) => {
           )}
         </tbody>
       </table>
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="Tiến >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        pageCount={totalPage}
+        previousLabel="< Lùi"
+        renderOnZeroPageCount={null}
+        className="pagination"
+        activeClassName="active"
+        pageLinkClassName="page-link"
+        nextLinkClassName="page-link"
+        previousLinkClassName="page-link"
+        breakLinkClassName="page-link"
+      />
       <ModalDeleteUser
+        currentPage={currentPage}
+        limitUser={limitUser}
         show={showModalDel}
         handleClose={handleCloseModalDel}
         userData={userData}
         handleRefreshUI={handleRefreshUI}
       />
       <ModalUpdateUser
+        currentPage={currentPage}
+        limitUser={limitUser}
         show={show}
         handleClose={handleClose}
         userData={userData}
@@ -110,4 +137,4 @@ const TableUser = (props) => {
   );
 };
 
-export default TableUser;
+export default TableUserPaginate;
