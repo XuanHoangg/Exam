@@ -4,16 +4,24 @@ import "../../style/User/Login.scss";
 import { postLogin, postRegister } from "../../service/authService";
 import { ToastContainer, toast } from "react-toastify";
 import validation from "../../utils/validation";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
+import { CgSpinnerTwo } from "react-icons/cg";
+import { set } from "lodash";
+
 const Login = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const [isLogin, setIsLogin] = useState(location.state?.isLogin ?? true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { validateEmail, validateUsername, validatePassword } = validation;
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -38,15 +46,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     if (isLogin) {
+      setIsLoading(true);
       let data = await postLogin(email, password);
       if (data && data.EC === 0) {
+        dispatch(doLogin(data));
         toast.success(data.EM);
-        toast.success("Bạn được điều hướng đến trang home");
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+        setIsLoading(false);
+        navigate("/");
       } else {
         toast.error(data.EM);
+        setIsLoading(false);
       }
     }
     if (!isLogin) {
@@ -87,6 +96,7 @@ const Login = () => {
                 </h1>
                 <button onClick={toggleForm} className="auth-toggle-btn">
                   {isLogin ? "Đăng ký" : "Đăng nhập"}
+
                   <ArrowRight size={14} className="auth-icon-small" />
                 </button>
               </div>
@@ -213,7 +223,12 @@ const Login = () => {
                     </div>
                   )}
 
-                  <button onClick={handleSubmit} className="submit-button">
+                  <button
+                    onClick={handleSubmit}
+                    className="submit-button"
+                    disabled={isLoading}
+                  >
+                    {isLoading && <CgSpinnerTwo className="loader-icon" />}{" "}
                     {isLogin ? "Đăng nhập" : "Đăng ký"}
                     <ArrowRight size={18} className="auth-icon" />
                   </button>
@@ -240,18 +255,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </>
   );
 };

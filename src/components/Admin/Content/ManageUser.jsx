@@ -38,7 +38,7 @@ const ManageUser = () => {
   };
   const handleTotalUserOnPage = () => (e) => {
     setLimitUser(e.target.value);
-    console.log("check limit user", e.target.value);
+    // console.log("check limit user", e.target.value);
   };
   return (
     <div className="manage-continer">

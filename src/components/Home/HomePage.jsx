@@ -1,6 +1,7 @@
 import React from "react";
 import videoHomePage from "../../assets/video-homepage.mp4";
 import "../../style/User/HomePage.scss";
+
 const HomePage = () => {
   return (
     <div className="homePage-continer">
